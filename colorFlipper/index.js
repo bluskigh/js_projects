@@ -24,6 +24,28 @@ document.addEventListener('DOMContentLoaded', function() {
     const partyButton = document.querySelector('#partyButton');
     const colorTitle = document.querySelector('#colorTitle');
     const main = document.querySelector('main');
+    const PARTY = {
+        stop: false,
+        async start() {
+            this.stop = false;
+            colorTitle.innerText = '!Party!';
+            while (true) {
+                if (this.stop) {
+                    break;
+                }
+                updateMain(createRgb())
+                await new Promise((resolve, reject) => {
+                    setTimeout(resolve, 500)
+                })
+            }
+        },
+        end() {
+            this.stop = true;
+            colorTitle.innerText = 'Party Over.'
+        }
+    };
+    let partyActive = false;
+
     button.addEventListener('click', function() {
         /*
         Goals:
@@ -50,34 +72,13 @@ document.addEventListener('DOMContentLoaded', function() {
            console.log(e)
        })
     })
-    let party = {
-        stop: false,
-        async start() {
-            this.stop = false;
-            colorTitle.innerText = '!Party!';
-            while (true) {
-                if (this.stop) {
-                    break;
-                }
-                updateMain(createRgb())
-                await new Promise((resolve, reject) => {
-                    setTimeout(resolve, 500)
-                })
-            }
-        },
-        end() {
-            this.stop = true;
-            colorTitle.innerText = 'Party Over.'
-        }
-    };
-    let partyActive = false;
     partyButton.addEventListener('click', async function() {
         partyActive = !partyActive;
         toggleButton(button);
         if (partyActive) {
-            party.start()
+            PARTY.start()
         } else {
-            party.end()
+            PARTY.end()
         }
     })
 })

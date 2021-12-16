@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Review Carousel</title>
+    <style>
+        html, body {margin: 0; padding: 0;background:black;color:white;}
+        main {
+            position: absolute;
+            top: 50%; right: 50%;
+            transform: translate(50%, -50%);
+            text-align: center;
+            background: white;
+            width: 50%; height: 50vh;
+            color: black;
+            clip-path: inset(0px 0px);
+        }
+        .active {
+
+        }
+        .inactive {
+
+        }
+        .user {
+            display: flex;
+            align-items: center; justify-content: center;
+            flex-direction: column;
+            margin: 0;
+            padding: .5em; box-sizing: border-box;
+            width: 100%; height: 100%;
+            background: blue;
+        }
+        .image {
+            height: 100px; width: 100px;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <h1>Earth's Reviews</h1>
+    </main>
+    <script src="index.js"></script>
+</body>
+</html>
