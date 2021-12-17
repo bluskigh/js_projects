@@ -6,8 +6,17 @@ document.addEventListener('DOMContentLoaded', function() {
     */
 
     const MAIN = document.querySelector('main');
+    const REVIEW_CONTAINER = document.querySelector('#reviewContainer');
     const PUNCTUATION = ['.', '!', '?'];
-    let images = [];
+    let images = [], currentImage = null;
+
+    const NAVIGATION = document.querySelectorAll('#navigation button');
+    const TOGGLE_NEXT = function() {
+        NAVIGATION[1].disabled = !NAVIGATION[1].disabled;
+    }
+    const TOGGLE_PREV = function() {
+        NAVIGATION[0].disabled = !NAVIGATION[0].disabled;
+    }
 
 
     function getRandom(min, max) {
@@ -56,8 +65,13 @@ document.addEventListener('DOMContentLoaded', function() {
         for (let i = 0; i < Math.round(Math.random()*5)+5; i++) {
             images.push(getImage())
         }
+
+        // disabling previous and next buttons
+        TOGGLE_PREV()
+        TOGGLE_NEXT()
+
         Promise.all(images).then(r => {
-            for (const image of r) {
+            r.forEach((image, index) => {
                 const userContainer = document.createElement('div');
                 userContainer.classList.add('user');
                 const imageContainer = document.createElement('img');
@@ -67,8 +81,45 @@ document.addEventListener('DOMContentLoaded', function() {
                 const textContainer = document.createElement('p');
                 textContainer.innerText = getParagraph();
                 userContainer.appendChild(textContainer);
-                MAIN.appendChild(userContainer);
+                REVIEW_CONTAINER.appendChild(userContainer);
+                images[index] = userContainer;
+            })
+            // display the middle review of all reviews
+            currentImage = Math.floor(images.length / 2);
+            for (let i = 0; i < currentImage; i++) {
+                images[i].style.display = 'none';
             }
+
+            // enabling previous and next buttons
+            TOGGLE_PREV()
+            TOGGLE_NEXT()
+
+            document.querySelector('.loading').style.animationPlayState = 'paused';
+            REVIEW_CONTAINER.removeChild(document.querySelector('.loading'))
         })
-    })()
+    })();
+
+    function next() {
+        images[currentImage].style.display = 'none';
+        currentImage += 1;
+        if (currentImage === images.length - 1 || NAVIGATION[1].disabled) {
+            TOGGLE_NEXT();
+        }
+        if (NAVIGATION[0].disabled) {
+            TOGGLE_PREV();
+        }
+    }
+    function prev() {
+        images[currentImage-1].style.display = 'flex';
+        currentImage -= 1;
+        if (currentImage == 0 || NAVIGATION[0].disabled) {
+            TOGGLE_PREV();
+        }
+        if (NAVIGATION[1].disabled) {
+            TOGGLE_NEXT();
+        }
+    }
+    NAVIGATION[0].addEventListener('click', prev)
+    NAVIGATION[1].addEventListener('click', next)
+
 })

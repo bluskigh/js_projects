@@ -7,15 +7,21 @@
     <title>Review Carousel</title>
     <style>
         html, body {margin: 0; padding: 0;background:black;color:white;}
+        h1, h2, h3, h4, h5, h6 { margin: 0; padding: 0; }
         main {
             position: absolute;
             top: 50%; right: 50%;
             transform: translate(50%, -50%);
             text-align: center;
             background: white;
-            width: 50%; height: 50vh;
+            width: 50vh; height: 50vh;
             color: black;
             clip-path: inset(0px 0px);
+            overflow: hidden;
+        }
+        main h1 {
+            display: flex; justify-content: center; align-items: center;
+            height: 20%;
         }
         .active {
 
@@ -29,18 +35,60 @@
             flex-direction: column;
             margin: 0;
             padding: .5em; box-sizing: border-box;
-            width: 100%; height: 100%;
-            background: blue;
+            width: 50vh; height: 100%;
         }
         .image {
             height: 100px; width: 100px;
             border-radius: 50%;
+        }
+        #reviewContainer {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: row;
+            position: relative;
+            overflow: hidden;
+            height: 70%; width: fit-content;
+        }
+        #navigation {
+            height: 10%;
+            display: flex;
+            align-items: center; justify-content: center;
+        }
+        .loading {
+
+        }
+        @keyframes loadingAnimation {
+            0% {
+                background: white;
+            }
+            100% {
+                background: black;
+            }
+        }
+        .loading .image, .loading p {
+            background: white;
+            animation-duration: 1s;
+            animation-name: loadingAnimation;
+            animation-iteration-count: infinite;
+            animation-direction: alternate;
+            animation-play-state: running;
         }
     </style>
 </head>
 <body>
     <main>
         <h1>Earth's Reviews</h1>
+        <section id="reviewContainer">
+            <div class="user loading">
+                <img class="image">
+                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sed odio ea repudiandae optio. Autem doloremque cupiditate ut, natus iusto, delectus dolor iste aperiam laboriosam a suscipit quis alias odio! Esse!</p>
+            </div>
+        </section>
+        <div id="navigation">
+            <button>&#x2039;</button>
+            <button>&#x203A;</button>
+        </div>
     </main>
     <script src="index.js"></script>
 </body>
